@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
@@ -5,11 +6,12 @@ const compression = require('compression');
 const app = express();
 const { GetObjectCommand } = require('@aws-sdk/client-s3');
 const s3 = require('./s3-connect.js');
+require('newrelic');
 
 const port = 5500;
+console.log(process.env.TITLE_SERVER_URL);
 // const priceServer = 'http://ec2-34-221-235-141.us-west-2.compute.amazonaws.com:3000';
-// const titleServer = 'http://13.57.14.144:2002';
-const titleServer = 'http://localhost:2002';
+const titleServer = process.env.TITLE_SERVER_URL;
 // const reviewsServer = 'http://54.183.2.218:4001/books/';
 // const summaryServer = 'http://ec2-18-188-135-5.us-east-2.compute.amazonaws.com:1220';
 // const aggServer = 'http://ec2-18-220-21-137.us-east-2.compute.amazonaws.com:2880';
@@ -159,5 +161,5 @@ app.all('/api/relatedIds/*', (req, res) => {
 
 
 app.listen(port, () => {
-  console.log(`Proxy listening on http://ec2-34-219-131-242.us-west-2.compute.amazonaws.com:${port}`)
+  console.log(`Proxy listening on http://localhost:${port}`)
 })
